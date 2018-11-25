@@ -5,6 +5,7 @@
   const Reactive = require('Reactive');
   const Scene = require('Scene');
   const Diagnostics = require('Diagnostics');
+  const userMood = 1;
 
   // Variables
   const textFromUser  = 'userInput';
@@ -29,11 +30,6 @@
   const closestMood = '';
   const dist = 100;
   const distanceToClosestHaiku = 'distToClosest';
-  const particles1 = 'emitter1';
-  const particles2 = 'emitter2';
-
-  //Assingments
-  userMood = 1;
 
   //Functions
   function parseLines(haikuLinesSeparatedWithDot){
@@ -130,8 +126,6 @@
     // Monitor user input and diveto lines
     NativeUI.getText(textFromUser).monitor().subscribe(function(f) {
       var str = f.newValue;
-      //Write to closestHaiku
-      closestHaiku = str;
       //Divide user input to lines
       parseLines(str);
       getLocation();
@@ -143,4 +137,3 @@
   //Check nearby
   checkNear();
 
-  Diagnostics.watch("Distance to nearest Haiku", distanceToClosestHaiku);
