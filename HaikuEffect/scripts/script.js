@@ -5,6 +5,7 @@
   const Reactive = require('Reactive');
   const Scene = require('Scene');
   const Diagnostics = require('Diagnostics');
+  const Time = require('Time');
 
   // Variables
   const textFromUser  = 'userInput';
@@ -140,7 +141,22 @@
     });
   });
 
-  //Check nearby
-  checkNear();
+  var cancelableTimer = Time.setTimeout(
+    function (elapsedTime) {
+      Diagnostics.log('You should not see this message in the console.');
+    }, 2900);
 
-  Diagnostics.watch("Distance to nearest Haiku", distanceToClosestHaiku);
+  // Repeating timer:
+  Time.ms.interval(1700).subscribe(
+  function (elapsedTime) {
+    // NOTE: Time.ms may differ slightly from the elapsed
+    // time passed to the callback. Time.ms shows the exact
+    // time since the effect started, whereas the callback
+    // exposes an exact multiple of the specified interval.
+    Diagnostics.log(Time.ms.lastValue);
+    Diagnostics.log(elapsedTime);
+    Time.clearTimeout(cancelableTimer);
+    //Check nearby
+    checkNear();
+    Diagnostics.log('Wo hoo.');
+  });
